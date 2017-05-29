@@ -30,11 +30,7 @@ public class HeatMap2D implements DataStorage {
 		return data.keySet().contains(new ChunkPosition(location.getBlockX(), location.getBlockZ()));
 	}
 
-	private static int getHash(Location location) {
-		return location.getChunk().getX() << 16 + location.getChunk().getZ();
-	}
-
-	private int getIndex(Location location) {
+	private static int getIndex(Location location) {
 		return location.getBlockX() % 16 + 16 * (location.getBlockY() % 16);
 	}
 
