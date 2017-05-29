@@ -3,3 +3,23 @@ main: com.monolytum.heatmap.HeatMap
 version: 1.0-alpha.1
 description: HeatMap plugin
 authors: [lennartVH01, olympus112]
+
+commands:
+  heatmap:
+    description: "Base command for heatmap interaction"
+    aliases: hm
+    permission: heatmap.heatmap
+    usage: "/<command> <opt-in|opt-out> <heatmap>"
+  heatmapadmin:
+    description: "Base command for heatmap admin stuff"
+    asiases: hma
+    permission: heatmap.admin
+    usage: "/<command> <disable|enable|reset> <heatmap>"
+
+permissions:
+  heatmap.heatmap:
+    description: "Allows access to /heatmap"
+    default: true
+  heatmap.admin:
+    description: "Gives access to admin commands for heatmapadmin"
+    default: op
