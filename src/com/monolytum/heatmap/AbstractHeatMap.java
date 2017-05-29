@@ -2,9 +2,9 @@ package com.monolytum.heatmap;
 
 abstract class AbstractHeatMap {
 
-    public BaseHeatMap map;
+    public DataStorage map;
 
-    public AbstractHeatMap(BaseHeatMap map) {
+    public AbstractHeatMap(DataStorage map) {
         this.map = map;
     }
 
