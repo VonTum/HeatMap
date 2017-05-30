@@ -9,8 +9,8 @@ import org.bukkit.command.TabCompleter;
 
 public class HeatMapCommand implements CommandExecutor, TabCompleter{
 	private static final String[] TABCOMPLETE_LIST = {
-		"optout",
-		"optin"
+		"opt-out",
+		"opt-in"
 	};
 	
 	@Override
