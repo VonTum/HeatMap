@@ -6,7 +6,7 @@ import java.util.HashMap;
 
 public class HeatMap2D implements DataStorage {
 
-	private HashMap<ChunkPosition, byte[]> data = new HashMap<>();
+	public HashMap<ChunkPosition, byte[]> data = new HashMap<>();
 
 	@Override
 	public void addAt(Location location, int value) {
@@ -27,7 +27,7 @@ public class HeatMap2D implements DataStorage {
 	}
 
 	private boolean isChunkPresent(Location location) {
-		return data.keySet().contains(new ChunkPosition(location.getBlockX(), location.getBlockZ()));
+		return data.containsKey(new ChunkPosition(location.getBlockX(), location.getBlockZ()));
 	}
 
 	private static int getHash(Location location) {
@@ -38,10 +38,10 @@ public class HeatMap2D implements DataStorage {
 		return location.getBlockX() % 16 + 16 * (location.getBlockY() % 16);
 	}
 
-	public class ChunkPosition {
+	public static class ChunkPosition {
 
-		int x;
-		int z;
+		public int x;
+		public int z;
 
 		public ChunkPosition(int x, int z) {
 			this.x = x;
