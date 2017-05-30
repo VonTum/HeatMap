@@ -1,13 +1,16 @@
 package com.monolytum.heatmap.IO;
 
 
+import com.monolytum.heatmap.HeatMap;
 import com.monolytum.heatmap.HeatMap2D;
 
 import javax.imageio.ImageIO;
+
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.net.URI;
 
 public class FileWriter {
 
@@ -24,8 +27,8 @@ public class FileWriter {
             maxZ = (chunkPosition.z > maxZ)? chunkPosition.z : maxZ;
         }
 
-        int width = (maxX - minX) * 16;
-        int height = (maxZ - minX) * 16;
+        int width = (maxX - minX + 1) * 16;
+        int height = (maxZ - minX + 1) * 16;
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -52,8 +55,9 @@ public class FileWriter {
                 }
             }
         }
-
-        File outputFile = new File("output.bmp");
+        
+        File imgUri = HeatMap.plugin.getDataFolder();
+        File outputFile = new File(imgUri, "output.bmp");
         try {
             ImageIO.write(image, "bmp", outputFile);
         } catch (IOException e) {
