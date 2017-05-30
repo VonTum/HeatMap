@@ -11,6 +11,7 @@ import java.util.ArrayList;
 public class HeatMapAdminCommand implements CommandExecutor, TabCompleter {
 	private static final String[] TABCOMPLETE_LIST = {
 		"disable",
+		"debug",
 		"enable",
 		"reset",
 		"save"
@@ -20,8 +21,14 @@ public class HeatMapAdminCommand implements CommandExecutor, TabCompleter {
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
 		if(args.length < 2) return false;
 		
-		if(args[0].equals("save"))
+		switch(args[0]){
+		case "save":
 			FileWriter.writeToImage(HeatMap.plugin.playerHeatMapStore, args[1]);
+			break;
+		case "debug":
+			FileWriter.writeDebugFile(HeatMap.plugin.playerHeatMapStore, args[1]);
+			break;
+		}
 		return false;
 	}
 	
