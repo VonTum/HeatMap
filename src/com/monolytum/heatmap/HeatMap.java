@@ -13,6 +13,8 @@ public class HeatMap extends JavaPlugin{
 	public void onEnable(){
 		plugin = this;
 		
+		saveDefaultConfig();
+		
 		HeatMapCommand hmCommand = new HeatMapCommand();
 		HeatMapAdminCommand hmaCommand = new HeatMapAdminCommand();
 		
