@@ -7,18 +7,22 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
+import com.monolytum.heatmap.IO.FileWriter;
+
 public class HeatMapAdminCommand implements CommandExecutor, TabCompleter {
 	private static final String[] TABCOMPLETE_LIST = {
 		"disable",
 		"enable",
-		"reset"
+		"reset",
+		"save"
 	};
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
 		if(args.length < 2) return false;
 		
-		
+		if(args[0].equals("save"))
+			FileWriter.writeToImage(HeatMap.plugin.playerHeatMapStore, args[1]);
 		return false;
 	}
 	

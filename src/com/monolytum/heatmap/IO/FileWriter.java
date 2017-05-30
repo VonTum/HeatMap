@@ -10,11 +10,11 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.net.URI;
 
 public class FileWriter {
 
-    public static void writeToImage(HeatMap2D map) {
+    public static void writeToImage(HeatMap2D map, String fileName) {
+    	System.out.println("Writing to file");
         int minX = 0;
         int minZ = 0;
         int maxX = 0;
@@ -42,7 +42,7 @@ public class FileWriter {
                     for (int x = 0; x < 16; x++) {
                         for (int z = 0; z < 16; z++) {
                             int index = 16 * z + x; // index in de 256 byte array
-                            Color color = Color.getHSBColor(blockValue[index], 1, 1); // geeft blockValue[index] een juiste int waarde terug (aantal keer over het block geweest)?
+                            Color color = Color.getHSBColor(blockValue[index]*10, 1, 1); // geeft blockValue[index] een juiste int waarde terug (aantal keer over het block geweest)?
                             image.setRGB(16 * chunkX + x, 16 * chunkZ + z, color.getRGB()); // stel de pixelkleur in
                         }
                     }
@@ -57,7 +57,7 @@ public class FileWriter {
         }
         
         File imgUri = HeatMap.plugin.getDataFolder();
-        File outputFile = new File(imgUri, "output.bmp");
+        File outputFile = new File(imgUri, fileName + ".bmp");
         try {
             ImageIO.write(image, "bmp", outputFile);
         } catch (IOException e) {

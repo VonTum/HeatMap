@@ -30,6 +30,8 @@ public class HeatMap extends JavaPlugin{
 		playerHeatMapStore = new HeatMap2D();
 		
 		playerMovementMap = new PlayerMovementMap(playerHeatMapStore);
+		
+		playerMovementMap.enable();
 	}
 	
 	@Override
