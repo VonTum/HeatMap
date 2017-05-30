@@ -30,6 +30,7 @@ public class PlayerMovementMap extends AbstractHeatMap implements Listener {
 		Block previousBlock = e.getFrom().subtract(location).getBlock();
 		if (!(block.getX() == previousBlock.getX() && block.getZ() == previousBlock.getZ())) {
 			map.addAt(location, 1);
+			//e.getPlayer().sendMessage(String.format("x:%d z:%d v:%d", location.getBlockX(), location.getBlockZ(), map.getValueAt(location)));
 		}
 	}
 	

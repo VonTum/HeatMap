@@ -5,7 +5,6 @@ import com.monolytum.heatmap.HeatMap;
 import com.monolytum.heatmap.HeatMap2D;
 
 import javax.imageio.ImageIO;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -32,32 +31,31 @@ public class FileWriter {
 
         BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
-        for (int chunkZ = minZ; chunkZ <= maxZ; chunkZ++) { // <= of < ?, want chunk maxX, maxZ moet toch ook getekend worden,
+        for (int chunkZ = minZ; chunkZ <= maxZ; chunkZ++) {
             for (int chunkX = minX; chunkX <= maxX; chunkX++) {
 
                 HeatMap2D.ChunkPosition chunkPosition = new HeatMap2D.ChunkPosition(chunkX, chunkZ);
 
-                if (map.data.containsKey(chunkPosition)) { // schrijf de waarden naar de afbeelding chunk per chunk
-                    byte[] blockValue = map.data.get(chunkPosition);
+                if (map.data.containsKey(chunkPosition)) {
+                    byte[] blockValues = map.data.get(chunkPosition);
                     for (int x = 0; x < 16; x++) {
                         for (int z = 0; z < 16; z++) {
-                            int index = 16 * z + x; // index in de 256 byte array
-                            Color color = Color.getHSBColor(blockValue[index]*10, 1, 1); // geeft blockValue[index] een juiste int waarde terug (aantal keer over het block geweest)?
-                            image.setRGB(16 * chunkX + x, 16 * chunkZ + z, color.getRGB()); // stel de pixelkleur in
+                            int index = 16 * z + x;
+                            Color color = Color.getHSBColor(blockValues[index] * 10, 1, 1);
+                            image.setRGB(16 * (chunkX - minX) + x, 16 * (chunkZ - minZ) + z, color.getRGB());
                         }
                     }
-                } else { // schrijf een witte pixel naar de afbeelding (dubble for lus herhaald, voor debugging, compressie gebeurt later)
+                } else {
                     for (int x = 0; x < 16; x++) {
                         for (int z = 0; z < 16; z++) {
-                            image.setRGB(16 * chunkX + x, 16 * chunkZ + z, Color.white.getRGB());
-                        }
+                            image.setRGB(16 * (chunkX - minX) + x, 16 * (chunkZ - minZ) + z, Color.white.getRGB());
+                    }
                     }
                 }
             }
         }
-        
-        File imgUri = HeatMap.plugin.getDataFolder();
-        File outputFile = new File(imgUri, fileName + ".bmp");
+
+        File outputFile = new File(HeatMap.plugin.getDataFolder(), "output.bmp");
         try {
             ImageIO.write(image, "bmp", outputFile);
         } catch (IOException e) {
