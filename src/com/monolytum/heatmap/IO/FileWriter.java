@@ -33,7 +33,7 @@ public class FileWriter {
 		System.out.println("maxZ: " + maxZ);
 		
 		int width = (maxX - minX + 1) * 16;
-		int height = (maxZ - minX + 1) * 16;
+		int height = (maxZ - minZ + 1) * 16;
 
 		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
 
@@ -42,24 +42,28 @@ public class FileWriter {
 
 				HeatMap2D.ChunkPosition chunkPosition = new HeatMap2D.ChunkPosition(chunkX, chunkZ);
 
-                if (map.data.containsKey(chunkPosition)) {
-                    byte[] blockValues = map.data.get(chunkPosition);
-                    for (int x = 0; x < 16; x++) {
-                        for (int z = 0; z < 16; z++) {
-                            int index = 16 * z + x;
-                            Color color = Color.getHSBColor(blockValues[index] * 10, 1, 1);
-                            image.setRGB(16 * (chunkX - minX) + x, 16 * (chunkZ - minZ) + z, color.getRGB());
-                        }
-                    }
-                } else {
-                    for (int x = 0; x < 16; x++) {
-                        for (int z = 0; z < 16; z++) {
-                            image.setRGB(16 * (chunkX - minX) + x, 16 * (chunkZ - minZ) + z, Color.white.getRGB());
-                    }
-                    }
-                }
-            }
-        }
+				if (map.data.containsKey(chunkPosition)) {
+					byte[] blockValues = map.data.get(chunkPosition);
+					for (int x = 0; x < 16; x++) {
+						for (int z = 0; z < 16; z++) {
+							int index = 16 * z + x;
+							
+							int value = 255-blockValues[index] * 10;
+							if(value < 0) value = 0;
+							Color color = new Color(value, value, value);
+							
+							image.setRGB(16 * (chunkX - minX) + x, 16 * (chunkZ - minZ) + z, color.getRGB());
+						}
+					}
+				} else {
+					for (int x = 0; x < 16; x++) {
+						for (int z = 0; z < 16; z++) {
+							image.setRGB(16 * (chunkX - minX) + x, 16 * (chunkZ - minZ) + z, Color.white.getRGB());
+						}
+					}
+				}
+			}
+		}
 
 		File outputFile = new File(HeatMap.plugin.getDataFolder(), fileName + ".bmp");
 		try {
@@ -75,7 +79,7 @@ public class FileWriter {
 		try(FileOutputStream stream = new FileOutputStream(outputFile)){
 			for(HeatMap2D.ChunkPosition chunkPos:hm.data.keySet()){
 				System.out.println("Writing " + chunkPos.x + ", " + chunkPos.z);
-				stream.write(new byte[]{'C','h','u','n','k',':',' ',(byte) (chunkPos.x >> 24), (byte) (chunkPos.x >> 16), (byte) (chunkPos.x >> 8), (byte) chunkPos.x, (byte) (chunkPos.z >> 24), (byte) (chunkPos.z >> 16), (byte) (chunkPos.z >> 8), (byte) chunkPos.z, ' '});
+				stream.write(new byte[]{'C','h','u','n','k',':',' ', ' ',(byte) (chunkPos.x >> 24), (byte) (chunkPos.x >> 16), (byte) (chunkPos.x >> 8), (byte) chunkPos.x, (byte) (chunkPos.z >> 24), (byte) (chunkPos.z >> 16), (byte) (chunkPos.z >> 8), (byte) chunkPos.z});
 				stream.write(hm.data.get(chunkPos));
 			}
 			stream.flush();

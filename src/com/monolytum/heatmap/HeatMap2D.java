@@ -10,19 +10,25 @@ public class HeatMap2D implements DataStorage {
 
 	@Override
 	public void addAt(Location location, int value) {
-		if (!isChunkPresent(location)) data.put(new ChunkPosition(location), new byte[256]);
+		createIfNotExist(location);
+		
 		data.get(new ChunkPosition(location))[getIndex(location)] += value;
 	}
 
 	@Override
 	public void setValueAt(Location location, int value) {
-		if (!isChunkPresent(location)) data.put(new ChunkPosition(location), new byte[256]);
+		createIfNotExist(location);
+		
 		data.get(new ChunkPosition(location))[getIndex(location)] = (byte) value;
 	}
 
 	@Override
 	public int getValueAt(Location location) {
-		if (!isChunkPresent(location)) return 0;
+		if (!isChunkPresent(location))
+			return 0;
+		
+		System.out.println("Index: " + getIndex(location));
+		
 		return data.get(new ChunkPosition(location))[getIndex(location)];
 	}
 
@@ -31,11 +37,15 @@ public class HeatMap2D implements DataStorage {
 	}
 
 	private static int getIndex(Location location) {
-		return location.getBlockX() & 0x0F + 16 * (location.getBlockY() & 0x0F);
+		return (location.getBlockX() & 0x0F) + (location.getBlockZ() & 0x0F) * 16;
+	}
+	
+	private void createIfNotExist(Location l){
+		if (!isChunkPresent(l))
+			data.put(new ChunkPosition(l), new byte[256]);
 	}
 
 	public static class ChunkPosition {
-
 		public int x;
 		public int z;
 
@@ -57,7 +67,8 @@ public class HeatMap2D implements DataStorage {
 		@Override
 		public boolean equals(Object obj) {
 			if (obj instanceof ChunkPosition) {
-				return ((ChunkPosition) obj).x == x && ((ChunkPosition) obj).z == z;
+				ChunkPosition other = (ChunkPosition) obj;
+				return other.x == x && other.z == z;
 			}
 			return false;
 		}
