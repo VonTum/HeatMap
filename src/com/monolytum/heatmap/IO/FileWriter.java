@@ -3,9 +3,9 @@ package com.monolytum.heatmap.IO;
 
 import com.monolytum.heatmap.HeatMap;
 import com.monolytum.heatmap.HeatMap2D;
+import com.monolytum.heatmap.HeatMapSparse2D;
 
 import javax.imageio.ImageIO;
-
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -13,6 +13,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileWriter {
+
 	public static void writeToImage(HeatMap2D map, String fileName) {
 		System.out.println("Writing to file");
 		int minX = 0;
@@ -55,11 +56,49 @@ public class FileWriter {
                     for (int x = 0; x < 16; x++) {
                         for (int z = 0; z < 16; z++) {
                             image.setRGB(16 * (chunkX - minX) + x, 16 * (chunkZ - minZ) + z, Color.white.getRGB());
-                    }
+                        }
                     }
                 }
             }
         }
+
+		File outputFile = new File(HeatMap.plugin.getDataFolder(), fileName + ".bmp");
+		try {
+			ImageIO.write(image, "bmp", outputFile);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public static void writeToImage(HeatMapSparse2D map, String fileName) {
+		System.out.println("Writing to file");
+
+		int minX = 0;
+		int minZ = 0;
+		int maxX = 0;
+		int maxZ = 0;
+
+		for(HeatMapSparse2D.Position position : map.data.keySet()) {
+			minX = (position.x < minX)? position.x : minX;
+			minZ = (position.z < minZ)? position.z : minZ;
+			maxX = (position.x > maxX)? position.x : maxX;
+			maxZ = (position.z > maxZ)? position.z : maxZ;
+		}
+
+		int width = (maxX - minX);
+		int height = (maxZ - minX);
+
+		BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+
+		for (int x = 0; x < width; x++) {
+			for (int z = 0; z < width; z++) {
+				if (map.data.containsKey(new HeatMapSparse2D.Position(minX + x, minZ + z))) {
+					image.setRGB(x, z, Color.getHSBColor(50 * map.data.get(new HeatMapSparse2D.Position(minX + x, minZ + z)), 1, 1).getRGB());
+				} else {
+					image.setRGB(x, z, Color.white.getRGB());
+				}
+			}
+		}
 
 		File outputFile = new File(HeatMap.plugin.getDataFolder(), fileName + ".bmp");
 		try {

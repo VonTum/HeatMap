@@ -29,10 +29,10 @@ public class HeatMapSparse2D implements DataStorage {
 		return data.containsKey(new Position(location));
 	}
 
-	public class Position {
+	public static class Position {
 
-		int x;
-		int z;
+		public int x;
+		public int z;
 
 		public Position(int x, int z) {
 			this.x = x;

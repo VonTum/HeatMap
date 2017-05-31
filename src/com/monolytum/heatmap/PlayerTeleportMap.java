@@ -26,7 +26,8 @@ public class PlayerTeleportMap extends AbstractHeatMap implements Listener {
 
 	@EventHandler
 	public void onPlayerTeleport(PlayerTeleportEvent e) {
-
+		map.addAt(e.getFrom(), 1);
+		map.addAt(e.getTo(), 1);
 	}
 
 
