@@ -12,7 +12,7 @@ commands:
     usage: "/<command> <opt-in|opt-out> <heatmap>"
   heatmapadmin:
     description: "Base command for heatmap admin stuff"
-    asiases: hma
+    aliases: hma
     permission: heatmap.admin
     usage: "/<command> <disable|enable|reset> <heatmap>"
 
