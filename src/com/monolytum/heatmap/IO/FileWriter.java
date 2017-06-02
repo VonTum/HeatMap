@@ -6,14 +6,14 @@ import com.monolytum.heatmap.HeatMap2D;
 import com.monolytum.heatmap.HeatMapSparse2D;
 
 import javax.imageio.ImageIO;
-import java.awt.*;
+
+import java.awt.Color;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
 public class FileWriter {
-
 	public static void writeToImage(HeatMap2D map, String fileName) {
 		System.out.println("Writing to file");
 		int minX = 0;
