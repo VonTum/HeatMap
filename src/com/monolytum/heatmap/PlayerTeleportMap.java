@@ -8,9 +8,9 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 
 ;
 
-public class PlayerTeleportMap extends AbstractHeatMap implements Listener {
+public class PlayerTeleportMap extends HeatMapFiller implements Listener {
 
-	public PlayerTeleportMap(DataStorage map) {
+	public PlayerTeleportMap(HeatMapStorage map) {
 		super(map);
 	}
 

@@ -4,7 +4,7 @@ import org.bukkit.Location;
 
 import java.util.HashMap;
 
-public class HeatMap2D implements DataStorage {
+public class HeatMap2D implements HeatMapStorage {
 
 	public HashMap<ChunkPosition, byte[]> data = new HashMap<>();
 

@@ -6,9 +6,9 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerMoveEvent;
 
-public class PlayerMovementMap extends AbstractHeatMap implements Listener {
+public class PlayerMovementMap extends HeatMapFiller implements Listener {
 	
-	public PlayerMovementMap(DataStorage map) {
+	public PlayerMovementMap(HeatMapStorage map) {
 		super(map);
 	}
 	
