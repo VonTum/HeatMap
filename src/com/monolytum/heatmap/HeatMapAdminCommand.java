@@ -25,15 +25,15 @@ public class HeatMapAdminCommand implements CommandExecutor, TabCompleter {
 		
 		switch(args[0]){
 		case "save":
-			FileWriter.writeToImage(HeatMap.plugin.playerHeatMapStore, args[1]);
+			FileWriter.writeToImage(HMPlugin.plugin.playerHeatMapStore, args[1]);
 			sender.sendMessage("HeatMap '" + args[1] + "' has been written to " + args[1] + ".bmp");
 			return true;
 		case "debug":
-			FileWriter.writeDebugFile(HeatMap.plugin.playerHeatMapStore, args[1]);
+			FileWriter.writeDebugFile(HMPlugin.plugin.playerHeatMapStore, args[1]);
 			sender.sendMessage("HeatMap '" + args[1] + "' has been written to " + args[1] + ".txt");
 			return true;
 		case "reset":
-			HeatMap.plugin.playerHeatMapStore.data = new HashMap<HeatMap2D.ChunkPosition, byte[]>();
+			HMPlugin.plugin.playerHeatMapStore.data = new HashMap<HeatMap2D.ChunkPosition, byte[]>();
 			sender.sendMessage("HeatMap '" + args[1] + "' has been reset!");
 			return true;
 		}

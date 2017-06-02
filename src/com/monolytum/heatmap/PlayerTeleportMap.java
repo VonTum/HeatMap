@@ -16,7 +16,7 @@ public class PlayerTeleportMap extends HeatMapFiller implements Listener {
 
 	@Override
 	void enable() {
-		Bukkit.getPluginManager().registerEvents(this, HeatMap.plugin);
+		Bukkit.getPluginManager().registerEvents(this, HMPlugin.plugin);
 	}
 
 	@Override

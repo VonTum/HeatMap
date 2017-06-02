@@ -1,7 +1,7 @@
 package com.monolytum.heatmap.IO;
 
 
-import com.monolytum.heatmap.HeatMap;
+import com.monolytum.heatmap.HMPlugin;
 import com.monolytum.heatmap.HeatMap2D;
 import com.monolytum.heatmap.HeatMapSparse2D;
 
@@ -66,7 +66,7 @@ public class FileWriter {
 			}
 		}
 		
-		File outputFile = new File(HeatMap.plugin.getDataFolder(), fileName + ".bmp");
+		File outputFile = new File(HMPlugin.plugin.getDataFolder(), fileName + ".bmp");
 		try {
 			ImageIO.write(image, "bmp", outputFile);
 		} catch (IOException e) {
@@ -104,7 +104,7 @@ public class FileWriter {
 			}
 		}
 
-		File outputFile = new File(HeatMap.plugin.getDataFolder(), fileName + ".bmp");
+		File outputFile = new File(HMPlugin.plugin.getDataFolder(), fileName + ".bmp");
 		try {
 			ImageIO.write(image, "bmp", outputFile);
 		} catch (IOException e) {
@@ -114,7 +114,7 @@ public class FileWriter {
 	
 	public static void writeDebugFile(HeatMap2D hm, String fileName){
 		System.out.println("Debug!");
-		File outputFile = new File(HeatMap.plugin.getDataFolder(), fileName + ".txt");
+		File outputFile = new File(HMPlugin.plugin.getDataFolder(), fileName + ".txt");
 		try(FileOutputStream stream = new FileOutputStream(outputFile)){
 			for(HeatMap2D.ChunkPosition chunkPos:hm.data.keySet()){
 				System.out.println("Writing " + chunkPos.x + ", " + chunkPos.z);

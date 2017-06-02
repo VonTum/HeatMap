@@ -3,9 +3,9 @@ package com.monolytum.heatmap;
 import org.bukkit.plugin.java.JavaPlugin;
 
 //doing it quick and dirty, will make into real API later
-public class HeatMap extends JavaPlugin{
+public class HMPlugin extends JavaPlugin{
 	
-	public static HeatMap plugin;
+	public static HMPlugin plugin;
 	public HeatMap2D playerHeatMapStore;
 	public PlayerMovementMap playerMovementMap;
 	
