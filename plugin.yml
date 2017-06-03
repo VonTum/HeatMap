@@ -21,5 +21,5 @@ permissions:
     description: "Allows access to /heatmap"
     default: true
   heatmap.admin:
-    description: "Gives access to admin commands for heatmapadmin"
+    description: "Allows access to /heatmapadmin"
     default: op
