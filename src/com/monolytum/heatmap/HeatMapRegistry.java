@@ -2,6 +2,7 @@ package com.monolytum.heatmap;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import org.bukkit.plugin.Plugin;
 
@@ -33,6 +34,14 @@ public class HeatMapRegistry {
 		HeatMapStorage storage = heatMapStorageFactories.get(new TwoPartName(dataStorageName)).produce(storageOptions);
 		HeatMapFiller filler = heatMapFillerFactories.get(new TwoPartName(dataFillerName)).produce(storage, fillerOptions);
 		return new HeatMap(heatMapName, storage, filler);
+	}
+	
+	public Set<TwoPartName> getRegisteredStorages(){
+		return heatMapStorageFactories.keySet();
+	}
+	
+	public Set<TwoPartName> getRegisteredFillers(){
+		return heatMapFillerFactories.keySet();
 	}
 	
 	public static interface HeatMapStorageFactory{
