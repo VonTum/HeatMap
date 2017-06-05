@@ -45,7 +45,12 @@ public class HMPlugin extends JavaPlugin{
 		
 		playerMovementMap.enable();*/
 		
-		HeatMap playerMovementMap = registry.createNewHeatMap("moveMap", "heatMap2D", "playerMovement", Collections.emptyMap(), Collections.emptyMap());
+		HeatMapStorage storage = registry.createNewHeatMapStorage("heatMap2D", Collections.emptyMap());
+		HeatMapFiller filler = registry.createNewHeatMapFiller("playerMovement", storage, Collections.emptyMap());
+		
+		HeatMap playerMovementMap = new HeatMap("playerMove", storage, filler);
+		
+		addHeatMap(playerMovementMap);
 		
 		playerMovementMap.enable();
 	}
@@ -68,10 +73,8 @@ public class HMPlugin extends JavaPlugin{
 	}
 	
 	public HeatMap getHeatMap(String name){return heatMaps.get(name);}
-	
+	public void addHeatMap(HeatMap hm){heatMaps.put(hm.getName(), hm);}
+	public boolean deleteHeatMap(String name){return heatMaps.remove(name) != null;}
 	public Collection<HeatMap> getHeatMaps() {return heatMaps.values();}
-	
-	public HeatMapRegistry getRegistry(){
-		return registry;
-	}
+	public HeatMapRegistry getRegistry(){return registry;}
 }

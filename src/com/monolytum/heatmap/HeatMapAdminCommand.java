@@ -19,23 +19,49 @@ public class HeatMapAdminCommand implements CommandExecutor, TabCompleter {
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
-		if(args.length < 2) return false;
-		
-		HeatMap hm = HMPlugin.plugin.getHeatMap(args[1]);
-		
 		switch(args[0]){
-		case "save":
+		case "save":{
 			// TODO save
+			if(args.length < 2) return false;
+			HeatMap hm = HMPlugin.plugin.getHeatMap(args[1]);
 			sender.sendMessage("HeatMap '" + args[1] + "' has been written to " + args[1] + ".bmp");
 			return true;
-		case "debug":
+		}
+		case "debug":{
 			// TODO debug
+			if(args.length < 2) return false;
+			HeatMap hm = HMPlugin.plugin.getHeatMap(args[1]);
 			sender.sendMessage("HeatMap '" + args[1] + "' has been written to " + args[1] + ".txt");
 			return true;
-		case "reset":
+		}
+		case "reset":{
+			if(args.length < 2) return false;
+			HeatMap hm = HMPlugin.plugin.getHeatMap(args[1]);
 			hm.reset();
 			sender.sendMessage("HeatMap '" + args[1] + "' has been reset!");
 			return true;
+		}
+		case "list":{
+			String msg = "HeatMaps:\n";
+			for(HeatMap heatMap:HMPlugin.plugin.getHeatMaps())
+				msg += heatMap.getName() + ", ";
+			
+			if(HMPlugin.plugin.getHeatMaps().size() == 0)
+				sender.sendMessage("There are no heatmaps registered!");
+			else
+				sender.sendMessage(msg.substring(0, msg.length() - 2));
+			return true;
+			}
+		case "listregistry":{
+			String msg = "HeatMapFillers:\n";
+			for(HeatMapRegistry.TwoPartName filler:HMPlugin.plugin.getRegistry().getRegisteredFillers())
+				msg += filler.toString() + "\n";
+			msg += "HeatMapStorages:\n";
+			for(HeatMapRegistry.TwoPartName storage:HMPlugin.plugin.getRegistry().getRegisteredStorages())
+				msg += storage.toString() + "\n";
+			
+			sender.sendMessage(msg.substring(0, msg.length() - 1));
+		}
 		}
 		return false;
 	}

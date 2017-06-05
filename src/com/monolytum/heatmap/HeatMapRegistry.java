@@ -11,29 +11,32 @@ public class HeatMapRegistry {
 	private HashMap<TwoPartName, HeatMapFillerFactory> heatMapFillerFactories = new HashMap<>();
 	
 	public void registerHeatMapStorage(String name, Plugin registringPlugin, HeatMapStorageFactory factory) {
-		TwoPartName index = new TwoPartName(name, registringPlugin.getName());
+		TwoPartName index = new TwoPartName(registringPlugin.getName(), name);
 		
 		heatMapStorageFactories.put(index, factory);
 	}
 	
 	public void registerHeatMapFiller(String name, Plugin registringPlugin, HeatMapFillerFactory factory) {
-		TwoPartName index = new TwoPartName(name, registringPlugin.getName());
+		TwoPartName index = new TwoPartName(registringPlugin.getName(), name);
 		
 		heatMapFillerFactories.put(index, factory);
 	}
 	
 	public HeatMapStorage createNewHeatMapStorage(String name, Map<String, Object> options){
-		return heatMapStorageFactories.get(new TwoPartName(name)).produce(options);
+		HeatMapStorageFactory factory = heatMapStorageFactories.get(new TwoPartName(name));
+		if(factory == null)
+			return null;
+		else
+			return factory.produce(options);
 	}
 	
 	public HeatMapFiller createNewHeatMapFiller(String name, HeatMapStorage storage, Map<String, Object> options){
-		return heatMapFillerFactories.get(new TwoPartName(name)).produce(storage, options);
-	}
-	
-	public HeatMap createNewHeatMap(String heatMapName, String dataStorageName, String dataFillerName, Map<String, Object> storageOptions, Map<String, Object> fillerOptions) {
-		HeatMapStorage storage = heatMapStorageFactories.get(new TwoPartName(dataStorageName)).produce(storageOptions);
-		HeatMapFiller filler = heatMapFillerFactories.get(new TwoPartName(dataFillerName)).produce(storage, fillerOptions);
-		return new HeatMap(heatMapName, storage, filler);
+		HeatMapFillerFactory factory = heatMapFillerFactories.get(new TwoPartName(name));
+		
+		if(factory == null)
+			return null;
+		else
+			return factory.produce(storage, options);
 	}
 	
 	public Set<TwoPartName> getRegisteredStorages(){
