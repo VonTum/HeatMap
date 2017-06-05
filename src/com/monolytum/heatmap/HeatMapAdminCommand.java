@@ -1,14 +1,11 @@
 package com.monolytum.heatmap;
 
-import com.monolytum.heatmap.IO.FileWriter;
-
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class HeatMapAdminCommand implements CommandExecutor, TabCompleter {
 	private static final String[] TABCOMPLETE_LIST = {
@@ -16,24 +13,27 @@ public class HeatMapAdminCommand implements CommandExecutor, TabCompleter {
 		"debug",
 		"enable",
 		"reset",
-		"save"
+		"save",
+		"list"
 	};
 	
 	@Override
 	public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
 		if(args.length < 2) return false;
 		
+		HeatMap hm = HMPlugin.plugin.getHeatMap(args[1]);
+		
 		switch(args[0]){
 		case "save":
-			FileWriter.writeToImage(HMPlugin.plugin.playerHeatMapStore, args[1]);
+			// TODO save
 			sender.sendMessage("HeatMap '" + args[1] + "' has been written to " + args[1] + ".bmp");
 			return true;
 		case "debug":
-			FileWriter.writeDebugFile(HMPlugin.plugin.playerHeatMapStore, args[1]);
+			// TODO debug
 			sender.sendMessage("HeatMap '" + args[1] + "' has been written to " + args[1] + ".txt");
 			return true;
 		case "reset":
-			HMPlugin.plugin.playerHeatMapStore.data = new HashMap<HeatMap2D.ChunkPosition, byte[]>();
+			hm.reset();
 			sender.sendMessage("HeatMap '" + args[1] + "' has been reset!");
 			return true;
 		}
