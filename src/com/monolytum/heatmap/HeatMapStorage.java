@@ -8,4 +8,5 @@ public interface HeatMapStorage {
 	}
 	void setValueAt(Location l, int value);
     int getValueAt(Location l);
+    void reset();
 }

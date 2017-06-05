@@ -24,7 +24,12 @@ public class HeatMapSparse2D implements HeatMapStorage {
 		if(!isPositionPresent(location)) return 0;
 		return data.get(new Position(location));
 	}
-
+	
+	@Override
+	public void reset(){
+		data = new HashMap<>();
+	}
+	
 	private boolean isPositionPresent(Location location) {
 		return data.containsKey(new Position(location));
 	}

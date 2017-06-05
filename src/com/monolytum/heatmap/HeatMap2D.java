@@ -31,7 +31,12 @@ public class HeatMap2D implements HeatMapStorage {
 		
 		return data.get(new ChunkPosition(location))[getIndex(location)];
 	}
-
+	
+	@Override
+	public void reset(){
+		data = new HashMap<>();
+	}
+	
 	private boolean isChunkPresent(Location location) {
 		return data.containsKey(new ChunkPosition(location));
 	}
